@@ -7,6 +7,7 @@ import Modal from "react-modal";
 import { useNavigate } from "react-router";
 import axiosInstance from "../../utils/axiosInstance";
 import EmptyCard from "../../components/EmptyCard/EmptyCard";
+import CreateNotesImg from "../../assets/images/create-document.svg";
 
 const Home = () => {
   const [openAddEditModal, setOpenAddEditModal] = useState({
@@ -96,7 +97,7 @@ const Home = () => {
             ))} 
          </div>
         ) : (
-          <EmptyCard />
+          <EmptyCard imgSrc={CreateNotesImg} message={"İlk notunuzu oluşturmak için 'Add' butonuna tıklayın!"} />
         )}
       </div>
 
