@@ -8,7 +8,7 @@ import { useNavigate } from "react-router";
 import axiosInstance from "../../utils/axiosInstance";
 import EmptyCard from "../../components/EmptyCard/EmptyCard";
 import CreateNotesImg from "../../assets/images/create-document.svg";
-import NoDataImg from "../../assets/images/nodata.svg";
+import NoDataImg from "../../assets/images/no-data.svg";
 
 const Home = () => {
   const [openAddEditModal, setOpenAddEditModal] = useState({
@@ -76,9 +76,9 @@ const Home = () => {
    const onSearchNote = async(query) =>{
       try{
         const response =await axiosInstance.get("/search-notes",{
-        params : {query},
+        params : { query },
       });
-        if(ServerResponse.data && ServerResponse.data.notes) {
+        if(response.data && response.data.notes) {
           setIsSearch(true);
           setAllNotes(response.data.notes);
         }
