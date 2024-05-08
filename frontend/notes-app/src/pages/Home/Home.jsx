@@ -20,7 +20,7 @@ const Home = () => {
   const [allNotes, setAllNotes] = useState([]);
   const [userInfo, setUserInfo] = useState();
 
-  const [isSearch,setisSearch] = useState(false);
+  const [isSearch,setIsSearch] = useState(false);
 
   const navigate = useNavigate();
 
@@ -73,7 +73,7 @@ const Home = () => {
   };
 
    //Search for a note
-   const onSerachNote = async(query) =>{
+   const onSearchNote = async(query) =>{
       try{
         const response =await axiosInstance.get("/search-notes",{
         params : {query},
@@ -119,7 +119,7 @@ const Home = () => {
     <>
       <Navbar
           userInfo={userInfo} 
-          onSerachNote={onSerachNote}
+          onSearchNote={onSearchNote}
           handleClearSearch={handleClearSearch}/>
 
       <div className="container mx-auto">
