@@ -8,7 +8,7 @@ import { useNavigate } from "react-router";
 import axiosInstance from "../../utils/axiosInstance";
 import EmptyCard from "../../components/EmptyCard/EmptyCard";
 import CreateNotesImg from "../../assets/images/create-document.svg";
-import NoDataImg from "../../assets/images/nodata.svg";
+import NoDataImg from "../../assets/images/no-data.svg";
 
 const Home = () => {
   const [openAddEditModal, setOpenAddEditModal] = useState({
