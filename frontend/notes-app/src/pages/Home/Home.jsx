@@ -8,6 +8,7 @@ import { useNavigate } from "react-router";
 import axiosInstance from "../../utils/axiosInstance";
 import EmptyCard from "../../components/EmptyCard/EmptyCard";
 import CreateNotesImg from "../../assets/images/create-document.svg";
+import NoDataImg from "../../assets/images/nodata.svg";
 
 const Home = () => {
   const [openAddEditModal, setOpenAddEditModal] = useState({
@@ -18,6 +19,8 @@ const Home = () => {
 
   const [allNotes, setAllNotes] = useState([]);
   const [userInfo, setUserInfo] = useState();
+
+  const [isSearch,setisSearch] = useState(false);
 
   const navigate = useNavigate();
 
@@ -69,6 +72,43 @@ const Home = () => {
     }
   };
 
+   //Search for a note
+   const onSerachNote = async(query) =>{
+      try{
+        const response =await axiosInstance.get("/search-notes",{
+        params : {query},
+      });
+        if(ServerResponse.data && ServerResponse.data.notes) {
+          setIsSearch(true);
+          setAllNotes(response.data.notes);
+        }
+      }catch(error){
+        console.log(error);
+      }
+   };
+
+  const updateIsPinned = async (noteData) => {
+    const noteId = noteData._id;
+
+    try {
+      const response = await axiosInstance.put("/update-note-pinned/" + noteId, {
+        isPinned : !noteData.isPinned,
+      });
+
+      if (response.data && response.data.note) {
+        getAllNotes();
+        
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+   const handleClearSearch = () => {
+    setIsSearch(false);
+    getAllNotes();
+   };
+
   useEffect(() => {
     getAllNotes();
     getUserInfo();
@@ -77,7 +117,10 @@ const Home = () => {
 
   return (
     <>
-      <Navbar userInfo={userInfo} />
+      <Navbar
+          userInfo={userInfo} 
+          onSerachNote={onSerachNote}
+          handleClearSearch={handleClearSearch}/>
 
       <div className="container mx-auto">
         {allNotes.length > 0 ?  (
@@ -92,12 +135,15 @@ const Home = () => {
                 isPinned={item.isPinned}
                 onEdit={() => {handleEdit(item)}}
                 onDelete={() => deleteNote(item)}
-                onPinNote={() => {}}
+                onPinNote={() => updateIsPinned(item  )}
              />
             ))} 
          </div>
         ) : (
-          <EmptyCard imgSrc={CreateNotesImg} message={"İlk notunuzu oluşturmak için 'Add' butonuna tıklayın!"} />
+          <EmptyCard 
+          imgSrc={isSearch ? NoDataImg : CreateNotesImg}
+           message={isSearch ? "Aramanızla eşleşen bir not buunamadı."
+            : "İlk notunuzu oluşturmak için 'Add' butonuna tıklayın!"} />
         )}
       </div>
 
