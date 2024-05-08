@@ -142,7 +142,7 @@ const Home = () => {
         ) : (
           <EmptyCard 
           imgSrc={isSearch ? NoDataImg : CreateNotesImg}
-           message={isSearch ? "Aramanızla eşleşen bir not buunamadı."
+           message={isSearch ? "Aramanızla eşleşen bir not bulunamadı."
             : "İlk notunuzu oluşturmak için 'Add' butonuna tıklayın!"} />
         )}
       </div>
