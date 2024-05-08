@@ -76,9 +76,9 @@ const Home = () => {
    const onSearchNote = async(query) =>{
       try{
         const response =await axiosInstance.get("/search-notes",{
-        params : {query},
+        params : { query },
       });
-        if(ServerResponse.data && ServerResponse.data.notes) {
+        if(response.data && response.data.notes) {
           setIsSearch(true);
           setAllNotes(response.data.notes);
         }
