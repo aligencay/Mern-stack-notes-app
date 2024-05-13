@@ -17,7 +17,7 @@ const Home = () => {
     data: null,
   });
 
-  const [showToastMsg,setshowToastMsg] =useState({
+  const [showToastMsg,setShowToastMsg] =useState({
     isShown:false,
     message :"",
     type: "add",
@@ -36,7 +36,7 @@ const Home = () => {
 
    
   const showToastMessage = (message , type) => {
-    setshowToastMsg({
+    setShowToastMsg({
       isShown: true,
       message,
       type,
@@ -44,7 +44,7 @@ const Home = () => {
   };
 
   const handleCloseToast = () => {
-    setshowToastMsg({
+    setShowToastMsg({
       isShown: false,
       message: "",
     });
