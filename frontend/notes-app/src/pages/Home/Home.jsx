@@ -17,6 +17,12 @@ const Home = () => {
     data: null,
   });
 
+  const [showToastMsg,setShowToastMsg] =useState({
+    isShown:false,
+    message :"",
+    type: "add",
+  });
+
   const [allNotes, setAllNotes] = useState([]);
   const [userInfo, setUserInfo] = useState();
 
@@ -27,6 +33,22 @@ const Home = () => {
   const handleEdit = (noteDetails) => {
     setOpenAddEditModal({ isShown: true, type: "edit", data: noteDetails });
   }
+
+   
+  const showToastMessage = (message , type) => {
+    setShowToastMsg({
+      isShown: true,
+      message,
+      type,
+    });
+  };
+
+  const handleCloseToast = () => {
+    setShowToastMsg({
+      isShown: false,
+      message: "",
+    });
+  };
 
   // Get user info
   const getUserInfo = async () => {
@@ -63,6 +85,7 @@ const Home = () => {
       const response = await axiosInstance.delete("/delete-note/" + noteId);
 
       if (response.data && !response.data.error) {
+        showToastMessage("Note Deleted Successfully", 'delete');
         getAllNotes();
       }
     } catch (error) {
@@ -174,8 +197,18 @@ const Home = () => {
             setOpenAddEditModal({ isShown: false, type: "add", data: null });
           }}
           getAllNotes={getAllNotes}
+          showToastMessage={showToastMessage}
         />
       </Modal>
+
+
+     <Toast
+       isShown={showToastMsg.isShown}
+       message={showToastMsg.message}
+       type={showToastMsg.type}
+       onClose={handleCloseToast}
+       />
+
     </>
   );
 };
